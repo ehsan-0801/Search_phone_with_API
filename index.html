@@ -14,7 +14,10 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- heading -->
     <h2 class="text-center text-light bg-custom">Phone Bank</h2>
+    
+    <!-- search field start -->
     <div class="input-group mb-3 w-50 mx-auto">
       <input
         type="text"
@@ -25,7 +28,7 @@
         id="search_field"
       />
       <button
-        onclick=""
+        onclick="searchPhones()"
         class="btn btn-outline-secondary"
         type="button"
         id="button_search"
@@ -33,15 +36,24 @@
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
       </div>
+      
+    <!-- search field end -->
 
+    <!-- phone details section start -->
       <div id="phone_details" class="w-50 mx-auto">
         <div class="card"></div>
       </div>
+      
+    <!-- phone details section end -->
 
+    <!-- search results sections start -->
       <section class="container">
-        <div id="search_result" class="row row-cols-1 row-cols-md-3 g-4"></div>
+        <div id="search_result" class="row row-cols-1 row-cols-md-3 g-5 my-5"></div>
       </section>
+      
+    <!-- search results sections end -->
     </div>
+    <script src="js/index.js"></script>
     <script src="https://kit.fontawesome.com/77fa6aa17c.js" crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

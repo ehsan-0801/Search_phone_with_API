@@ -1,6 +1,14 @@
 body{
     background: #a2d2ff;
 }
+/* body background color setting */
 .bg-custom{
     background: #22223b;
 }
+.text-custom{
+    color: #0d53af;
+}
+.text-custom2{
+    color: #0dafa7;
+}
+/* custom background color setting */
