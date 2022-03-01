@@ -1,31 +1,47 @@
 const phonedetails = document.getElementById('phone_details');
-const searchPhones = () =>{
-    const searchfield = document.getElementById('search_field')
-    const searchText =searchfield.value;
+const error_Msg = document.getElementById('msg1')
+const searchfield = document.getElementById('search_field');
+const searchAmount = document.getElementById('searchAmount');
+const searchResult = document.getElementById('search_result')
+
+const toggleSpinner = displayStyle => {
+    document.getElementById('spinner_field').style.display = displayStyle;
+}
+
+const searchPhones = () => {
+    // display spinner
+    
+    const searchText = searchfield.value;
     // console.log(searchText);
     searchfield.value = '';
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
     // console.log(url);
     fetch(url)
-    .then(res => res.json())
-    .then(json => displaySearchResults(json.data))
+        .then(res => res.json())
+        .then(json => displaySearchResults(json.data.slice(0, 20)))
+        toggleSpinner('block')
 }
-const displaySearchResults = phones =>{
+const displaySearchResults = phones => {
     // console.log(phones)
-    const searchResult = document.getElementById('search_result')
     searchResult.innerHTML = '';
-    phonedetails.innerHTML='';
-    
-    // searchResult.textContent = '';
-    // if(phones.length == 0){
-    // }
-    // else{
+    phonedetails.innerHTML = '';
+    searchAmount.innerHTML = '';
+    if (phones.length == 0) {
+        error_Msg.innerHTML = 'No results found or Wrong input'
+    } 
+    else {
+        const h3 = document.createElement('h3')
+        h3.innerHTML = `Search Result: ${phones.length} <br>`
+        searchAmount.appendChild(h3)
         phones.forEach(phone => {
-        // console.log(phone)
-        const div = document.createElement('div')
-        div.classList.add('col')
-        // console.log(phone.slug)
-        div.innerHTML = `
+            // console.log(phone)
+            const div = document.createElement('div')
+            div.classList.add('col')
+
+            // console.log(phone.slug)
+            error_Msg.innerHTML = '';
+
+            div.innerHTML = `
         <img src="${phone.image}" class="card-img-top text-center" alt="..." />
             <div class="card border border-2 rounded shadow-lg">
                 <div class="card-body">
@@ -35,30 +51,30 @@ const displaySearchResults = phones =>{
                 </div>
             </div>
         `;
-        searchResult.appendChild(div)
-        
-    })
+            searchResult.appendChild(div)
+        })
+        toggleSpinner('none')
+    }
     // <div onclick="loadMealDetail(${phone.idMeal})" class="card">
-    
+
 }
-const loadPhoneDetails = phoneSlug =>
-{
+const loadPhoneDetails = phoneSlug => {
 
     console.log(phoneSlug);
     const url = `https://openapi.programming-hero.com/api/phone/${phoneSlug}`;
     console.log(url)
     fetch(url)
-    .then(res => res.json())
-    .then(json => displayPhoneDetails(json.data))
-    
+        .then(res => res.json())
+        .then(json => displayPhoneDetails(json.data))
+
 }
 const displayPhoneDetails = phone => {
     const phonedetails = document.getElementById('phone_details')
     console.log(phone)
-    phonedetails.innerHTML='';
-    const div =document.createElement('div')
+    phonedetails.innerHTML = '';
+    const div = document.createElement('div')
     div.classList.add('card')
-    div.innerHTML =`
+    div.innerHTML = `
         <div class='row p-md-5 p-sm-5'>
             <div class="col-md-6 col-sm-12 border border-1 border-primary rounded">
                 <img src="${phone.image}" class="card-img-top" alt="..." />
