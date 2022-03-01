@@ -1,3 +1,4 @@
+const phonedetails = document.getElementById('phone_details');
 const searchPhones = () =>{
     const searchfield = document.getElementById('search_field')
     const searchText =searchfield.value;
@@ -13,6 +14,7 @@ const displaySearchResults = phones =>{
     // console.log(phones)
     const searchResult = document.getElementById('search_result')
     searchResult.innerHTML = '';
+    phonedetails.innerHTML='';
     
     // searchResult.textContent = '';
     // if(phones.length == 0){
@@ -29,7 +31,7 @@ const displaySearchResults = phones =>{
                 <div class="card-body">
                     <h2 class="card-title text-secondary">Brand: <span class="text-custom">${phone.brand}</span></h2>
                     <h5 class="card-title text-danger">Model: <span class="text-custom2">${phone.phone_name}</span></h5>
-                    <button onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-outline-primary">Show Details</button>
+                    <a href='#phone_details' onclick="loadPhoneDetails('${phone.slug}')" class="btn btn-outline-primary">Show Details</a>
                 </div>
             </div>
         `;
@@ -47,21 +49,45 @@ const loadPhoneDetails = phoneSlug =>
     console.log(url)
     fetch(url)
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => displayPhoneDetails(json.data))
+    
 }
-const displayPhoneDetails = Phone => {
-    const mealdetails = document.getElementById('phone_details')
+const displayPhoneDetails = phone => {
+    const phonedetails = document.getElementById('phone_details')
+    console.log(phone)
+    phonedetails.innerHTML='';
     const div =document.createElement('div')
     div.classList.add('card')
     div.innerHTML =`
-                <img src="${meal.strMealThumb}" class="card-img-top" alt="..." />
-                    <div class="card-body">
-                    <h5 class="card-title">${meal.strMeal}</h5>
-                    <p class="card-text">
-                        ${meal.strInstructions.slice(0,150)}
-                    </p>
-                    <a href="${meal.strYoutube}" class="btn btn-primary">Watch  videos</a>
-                    </div>`;
-                    mealdetails.appendChild(div)
+        <div class='row p-md-5 p-sm-5'>
+            <div class="col-md-6 col-sm-12 border border-1 border-primary rounded">
+                <img src="${phone.image}" class="card-img-top" alt="..." />
+                <div>
+                    <h5>Release Date: <h6 class='text-secondary'>${phone.releaseDate? phone.releaseDate :'Release date not published yet' }</h6></h5>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 border border-1 border-success rounded">
+                <h2>Brand: <span class='text-primary fw-bold'>${phone.brand} </span></h2>
+                <h5>Name: <h6 class='text-secondary'>${phone.name}</h6>
+                <h4 class='text-success'>Specification:</h4>
+                <h5>Chipset:</h5> <h6 class='text-secondary'>${phone.mainFeatures.chipSet? phone.mainFeatures.chipSet :'Information not found' }</h6>
+                <h5>Display:</h5> <h6 class='text-secondary'>${phone.mainFeatures? phone.mainFeatures.displaySize :'Information not found' }</h6>
+                <h5>Memory: </h5><h6 class='text-secondary'>${phone.mainFeatures? phone.mainFeatures.memory :'Information not found' }</h6>
+                <h5>Storage:</h5> <h6 class='text-secondary'>${phone.mainFeatures? phone.mainFeatures.storage :'Information not found' }</h6>
+                <h5>Sensors:</h5> <h6 class='text-secondary'>${phone.mainFeatures? phone.mainFeatures.sensors :'Information not found' }</h6>
+
+            </div>
+        </div> 
+        <div class='p-md-5 p-sm-5 border border-1 border-dark rounded'>
+            <h6>Other Services:</h6>
+            Bluetooth: <p class='text-secondary'>${phone.others? phone.others.Bluetooth :'Not Found' }</p>
+            GPS: <p class='text-secondary'>${phone.others? phone.others.GPS :'Not Found' }</p>
+            NFC: <p class='text-secondary'>${phone.others? phone.others.NFC :'Not Found' }</p>
+            Radio: <p class='text-secondary'>${phone.others? phone.others.Radio :'Not Found' }</p>
+            USB: <p class='text-secondary'>${phone.others? phone.others.USB :'Not Found' }</p>
+            WLAN: <p class='text-secondary'>${phone.others? phone.others.WLAN :'Not Found' }</p>
+        </div>    
+    `;
+    phonedetails.appendChild(div)
 
 }
