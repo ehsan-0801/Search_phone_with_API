@@ -7,7 +7,7 @@ const searchResult = document.getElementById('search_result')
 const toggleSpinner = displayStyle => {
     document.getElementById('spinner_field').style.display = displayStyle;
 }
-
+// searching phones
 const searchPhones = () => {
     // display spinner
     
@@ -21,6 +21,7 @@ const searchPhones = () => {
         .then(json => displaySearchResults(json.data.slice(0, 20)))
         toggleSpinner('block')
 }
+// displaying all phones
 const displaySearchResults = phones => {
     // console.log(phones)
     searchResult.innerHTML = '';
@@ -58,6 +59,8 @@ const displaySearchResults = phones => {
     // <div onclick="loadMealDetail(${phone.idMeal})" class="card">
 
 }
+
+// loading individual phones
 const loadPhoneDetails = phoneSlug => {
 
     console.log(phoneSlug);
@@ -68,6 +71,8 @@ const loadPhoneDetails = phoneSlug => {
         .then(json => displayPhoneDetails(json.data))
 
 }
+
+// displaying individual spec
 const displayPhoneDetails = phone => {
     const phonedetails = document.getElementById('phone_details')
     console.log(phone)
